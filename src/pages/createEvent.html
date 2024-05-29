@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily:{
+          'poppins': ['Poppins', 'sans-serif']
+        },
+        extend: {
+          colors: {
+            darkblue: '#0C1D4B',
+            skyblue: '#6187BF',
+            lightblue: '#ABC9DD'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <div name="body"  class="flex flex-col h-screen bg-lightblue">
+
+    <div name="nav" class="flex justify-between items-center p-4">
+      <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Home</a>
+      <a class="px-4 font-poppins text-xl underline underline-offset-8 text-darkblue hover:animate-bounce">Events</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">My Points</a>
+      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue">Log Out</a>
+    </div>
+    
+    <div name="content" class="flex flex-col justify-center items-center pt-6">
+
+      <div class="pb-10">
+        <p class="font-poppins font-semibold text-6xl text-darkblue">Admin - Events</p>
+      </div>
+
+      <div name="eventsearch" class="flex flex-row space-x-4 w-9/12">
+        <div class="flex flex-col flex-grow">
+          <label class="font-poppins text-darkblue w-2/4">Event ID</label>
+          <input type="text" class="rounded-md h-7 outline-none focus:outline-skyblue text-darkblue pl-2">
+        </div>
+        <div class="flex flex-col w-2/4">
+          <label class="font-poppins text-darkblue">Event Name</label>
+          <input type="text" class="rounded-md h-7 outline-none focus:outline-skyblue text-darkblue pl-2">
+        </div>
+        <div class="flex flex-col w-40">
+          <label class="font-poppins text-darkblue">Event Date</label>
+          <input type="date" class="rounded-md h-7 outline-none focus:outline-skyblue text-darkblue pl-2">
+        </div>
+        <div class="flex flex-col">
+          <button class="bg-darkblue rounded-2xl w-40 h-14 text-white font-poppins text-xl">Search Event</button>
+        </div>
+      </div>
+
+      <div class="pt-10 w-9/12 font-poppins">
+        <table class="border-collapse table-auto w-full">
+          <colgroup>
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 10%;">
+            <col style="width: 50%;">
+            <col style="width: 20%;">
+          </colgroup>
+          <thead>
+            <tr class="bg-darkblue text-white">
+              <th class="py-2 px-4 border-r">ID</th>
+              <th class="py-2 px-4 border-r">Name</th>
+              <th class="py-2 px-4 border-r">Date</th>
+              <th class="py-2 px-4 border-r">Description</th>
+              <th class="py-2 px-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 px-4 border-r">1</td>
+              <td class="py-2 px-4 border-r">Event 1</td>
+              <td class="py-2 px-4 border-r">2023-05-29</td>
+              <td class="py-2 px-4 border-r">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, architecto rerum fugiat commodi qui vel ad dolorem autem ipsam quas porro, molestias sed aspernatur optio corporis perspiciatis quam cupiditate excepturi!</td>
+              <td class="py-2 px-4 flex justify-center space-x-2">
+                <button class="bg-skyblue text-white px-2 py-1 rounded">View</button>
+                <button class="bg-lightblue text-darkblue px-2 py-1 rounded">Edit</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
