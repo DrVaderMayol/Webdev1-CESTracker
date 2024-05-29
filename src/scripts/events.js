@@ -28,7 +28,7 @@ async function getEvents() {
     row.innerHTML = `
       <td class="w-fit  py-2 px-4 border-r">${event.eventID}</td>
       <td class="w-fit py-2 px-4 border-r">${event.name}</td>
-      <td class="w-1/6 py-2 px-4 border-r">${formattedDate}</td>
+      <td class="w-2/6 py-2 px-4 border-r">${formattedDate}</td>
       <td class="w-fit py-2 px-4 border-r">${event.description}</td>
       <td class="py-2 px-4 flex justify-center space-x-2">
         <button class="bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
