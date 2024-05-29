@@ -4,12 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Event</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         fontFamily:{
-
+          'poppins': ['Poppins', 'sans-serif']
         },
         extend: {
           colors: {
@@ -23,12 +28,37 @@
   </script>
 </head>
 <body>
-  <div class="flex flex-col h-screen bg-lightblue">
-    <div class="flex justify-between items-center p-4">
-      <a class="pl-8">CES Points Tracker</a>
-      <a class="px-4">Home</a>
-      <a class="px-4">Events</a>
-      <a class="ml-auto px-4">Log Out</a>
+  <div name="body"  class="flex flex-col h-screen bg-lightblue">
+
+    <div name="nav" class="flex justify-between items-center p-4">
+      <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Home</a>
+      <a class="px-4 font-poppins text-xl underline underline-offset-8 text-darkblue hover:animate-bounce">Events</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">My Points</a>
+      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue">Log Out</a>
+    </div>
+    
+    <div name="content" class="flex flex-col justify-center items-center pt-6">
+      <div class="pb-10">
+        <p class="font-poppins font-semibold text-6xl text-darkblue">Admin - Events</p>
+      </div>
+      <div class="flex flex-row space-x-4 w-9/12">
+        <div class="flex flex-col">
+          <label class="font-poppins text-darkblue w-2/4">Event ID</label>
+          <input type="text" class="rounded-md h-7 outline-none focus:outline-skyblue text-darkblue">
+        </div>
+        <div class="flex flex-col w-2/4">
+          <label class="font-poppins text-darkblue">Event Name</label>
+          <input type="text" class="rounded-md h-7 outline-none focus:outline-skyblue text-darkblue">
+        </div>
+        <div class="flex flex-col w-40">
+          <label class="font-poppins text-darkblue">Event ID</label>
+          <input type="date" class="rounded-md h-7 outline-none focus:outline-skyblue text-darkblue">
+        </div>
+        <div class="flex flex-col">
+          <button class="bg-darkblue rounded-2xl w-40 h-14 text-white font-poppins text-xl">Search Event</button>
+        </div>
+      </div>
     </div>
   </div>
 </body>
