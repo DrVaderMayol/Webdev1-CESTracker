@@ -1,4 +1,4 @@
-function generateID(date, format) {
+export function generateID(date, dept) {
   // Extract month, day, and year from the given date
   const [month, day, year] = date.split('-');
 
@@ -6,7 +6,7 @@ function generateID(date, format) {
   const randomString = generateRandomString(5);
 
   // Construct the ID using the provided format
-  const id = `${month}${day}${year}_${format}_${randomString}`;
+  const id = `${month}${day}${year}_${dept}_${randomString}`;
 
   return id;
 }
@@ -21,7 +21,3 @@ function generateRandomString(length) {
 
   return randomString;
 }
-
-// Example usage
-const generatedID = generateID("05-29-24", "DCISM");
-console.log(generatedID);
