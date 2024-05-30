@@ -4,6 +4,49 @@ const api_url="https://zknaosqwpjxkkoiliwkh.supabase.co"
 
 const connection = supabase.createClient(api_url, api_key)
 
+// Get the addEventButton, addEventModal, and addEventCloseButton elements
+const addEventButton = document.getElementById('addEventButton');
+const addEventModal = document.getElementById('addEventModal');
+const addEventCloseButton = document.querySelector('#addEventModal .close');
+const addEventSaveButton = document.getElementById('addEventSaveButton');
+
+// Get the delete buttons
+const deleteButtons = document.querySelectorAll('#deleteCesEventBtn');
+const deleteEventModal = document.getElementById('deleteEventModal');
+
+async function deleteCesEvent(eventID) {
+  const { error } = await connection
+   .from("CES Event")
+   .delete()
+   .eq('eventID', eventID);
+
+  if (error) {
+    throw error;
+  } else {
+    console.log(`Event with ID ${eventID} deleted successfully.`);
+  }
+
+  // Refresh the events list to reflect the deletion
+  getEvents();
+}
+
+async function addCesEvent(name, department, description, event_date) {
+  const generatedEventID = generateID(event_date, department);
+
+  const { error } = await connection
+    .from("CES Event")
+    .insert({
+      eventID: generatedEventID,
+      name: name,
+      description: description,
+      event_date: event_date,
+    });
+
+  if (error) {
+    throw error;
+  }
+}
+
 async function getEvents() {
   const { data, error } = await connection.from("CES Event").select();
   if (error) {
@@ -41,7 +84,7 @@ async function getEvents() {
           Edit
         </button>
 
-        <button class="bg-red-300 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
+        <button id="deleteCesEventBtn_${event.eventID}" class="deleteCesEventBtn bg-red-300 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
           <span class="material-symbols-outlined">delete</span>
           Delete
         </button>
@@ -51,24 +94,54 @@ async function getEvents() {
     tableBody.appendChild(row);
   });
 
-  // Get the modal
-  var modal = document.getElementById("myModal");
-  var btn = document.getElementById("myBtn");
-  var span = document.getElementsByClassName("close")[0];
+    // Attach event listeners to the delete buttons
+  const deleteButtons = document.querySelectorAll('.deleteCesEventBtn');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const eventIdWithoutPrefix = event.target.id.replace('deleteCesEventBtn_', '');
+    
+      deleteEventModal.classList.toggle('hidden');
+    
+      const eventName = event.target.parentNode.parentNode.children[1].textContent;
+      document.getElementById('deleteEventQuestion').textContent = `Are you sure you want to delete event titled "${eventName}"?`;
+    
+      const confirmDeleteEventBtn = document.getElementById('confirmDeleteEventBtn');
+    
+      const cancelDeleteEventBtn = document.getElementById('cancelDeleteEventBtn');
 
-  btn.onclick = function() {
-    modal.style.display = "block";
-  }
-
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
+      cancelDeleteEventBtn.addEventListener('click', () => {
+        event.preventDefault();
+        deleteEventModal.classList.toggle('hidden');
+        console.log('cancel clicked');
+      });
+      
+      confirmDeleteEventBtn.addEventListener('click', async () => {
+        event.preventDefault();
+        try {
+          await deleteCesEvent(eventIdWithoutPrefix);
+      
+          deleteEventModal.classList.toggle('hidden');
+      
+          alert('Event deleted successfully');
+          
+        } catch (error) {
+          alert(`Error deleting event: ${error.message}`);
+        }
+      });
+      
+      // Corrected event listener for closing the modal when clicking outside
+      document.addEventListener('click', (event) => {
+        event.preventDefault();
+        // Check if the target is the modal or one of its children
+        if (event.target === deleteEventModal) {
+          // Hide the delete event modal
+          deleteEventModal.classList.toggle('hidden');
+          console.log('outside modal clicked');
+        }
+      });
+    });
+  });
 }
 
 function generateID(date, dept) {
@@ -95,11 +168,6 @@ function generateRandomString(length) {
   return randomString;
 }
 
-// Get the addEventButton, addEventModal, and addEventCloseButton elements
-const addEventButton = document.getElementById('addEventButton');
-const addEventModal = document.getElementById('addEventModal');
-const addEventCloseButton = document.querySelector('#addEventModal .close');
-const addEventSaveButton = document.getElementById('addEventSaveButton');
 
 // Add an event listener to the addEventButton
 addEventButton.addEventListener('click', () => {
@@ -151,22 +219,5 @@ document.addEventListener('click', (event) => {
     addEventModal.classList.add('hidden');
   }
 }); 
-
-async function addCesEvent(name, department, description, event_date) {
-  const generatedEventID = generateID(event_date, department);
-
-  const { error } = await connection
-    .from("CES Event")
-    .insert({
-      eventID: generatedEventID,
-      name: name,
-      description: description,
-      event_date: event_date,
-    });
-
-  if (error) {
-    throw error;
-  }
-}
 
 document.addEventListener('DOMContentLoaded', getEvents);
