@@ -38,7 +38,7 @@ async function loginf(email, password){
 async function register(firstName, middleName, lastName, course, studentID, email, password){
 
   const { error } = await connection
-    .from("CES Event")
+    .from("Student")
     .insert({
       firstName: firstName,
       middleName: middleName,
@@ -87,3 +87,39 @@ loginbtn.addEventListener('click', async(event) => {
 });
 
 
+registerbtn.addEventListener('click', async (event) => {
+  event.preventDefault();
+
+  // Get the values of the registration fields
+  const firstName = document.getElementById('registerFirstName').value.trim();
+  const middleName = document.getElementById('registerMiddleName').value.trim();
+  const lastName = document.getElementById('registerLastName').value.trim();
+  const course = document.getElementById('registerCourse').value.trim();
+  const studentID = document.getElementById('registerStudentID').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  const password = document.getElementById('registerPass').value.trim();
+
+  // Field validation
+  if (!firstName || !lastName || !course || !studentID || !email || !password) {
+    alert('All fields are required.');
+    return;
+  }
+
+  if (firstName === '' || lastName === '' || course === '' || studentID === '' || email === '' || password === '') {
+    alert('Fields cannot be empty.');
+    return;
+  }
+
+  const emailPattern = /^[0-9]+@usc.edu.ph$/;
+  if (!emailPattern.test(email)) {
+    alert('Email must be in the format 19103939@usc.edu.ph with numbers before @ and ending with usc.edu.ph.');
+    return;
+  }
+
+  try {
+    await register(firstName, middleName, lastName, course, studentID, email, password);
+    alert('Registered successfully');
+  } catch (error) {
+    alert(`Error registering: ${error.message}`);
+  }
+});
