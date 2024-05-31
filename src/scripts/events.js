@@ -160,97 +160,95 @@ async function getEvents() {
   });
 
   // Attach event listeners to the edit buttons
-const editButtons = document.querySelectorAll('.editCesEventBtn');
-const editEventSaveButton = document.getElementById('editEventSaveButton');
-editButtons.forEach(button => {
-  button.addEventListener('click', (event) => {
-    event.preventDefault();
-    const eventIdWithoutPrefix = event.target.id.replace('editCesEventBtn_', '');
-
-    // Show the edit event modal
-    editEventModal.classList.remove('hidden');
-
-    // Populate the edit fields with the event details
-    const eventNameInput = document.getElementById('edit_eventName');
-    const departmentInput = document.getElementById('edit_department');
-    const descriptionInput = document.getElementById('edit_description');
-    const datetimeInput = document.getElementById('edit_datetime');
-
-    const eventRow = event.target.closest('tr');
-    const eventNameText = eventRow.children[1].textContent;
-    const eventDateText = eventRow.children[2].textContent;
-    const eventDescriptionText = eventRow.children[3].textContent;
-
-    // Convert eventDateText to a valid datetime-local format
-    const isoDateString = convertToDateTimeLocal(eventDateText);
-
-    if (!isoDateString) {
-      alert('Invalid event date format.');
-      return;
-    }
-
-    // Extract department from event ID
-    const department = eventIdWithoutPrefix.split('_')[1];
-
-    eventNameInput.value = eventNameText;
-    departmentInput.value = department;
-    descriptionInput.value = eventDescriptionText;
-    datetimeInput.value = isoDateString;
-
-    
-    const editDeleteEventBtn = document.getElementById('editDeleteEventBtn');
-
-    editDeleteEventBtn.addEventListener('click', () => {
+  const editButtons = document.querySelectorAll('.editCesEventBtn');
+  const editEventSaveButton = document.getElementById('editEventSaveButton');
+  editButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
       event.preventDefault();
-      editEventModal.classList.toggle('hidden');
-      console.log('cancel clicked');
-    });
-    
-    // Attach event listener to the save button
-    editEventSaveButton.addEventListener('click', async (saveEvent) => {
-      saveEvent.preventDefault();
-      try {
-        await editCesEvent(eventIdWithoutPrefix, eventNameInput.value, departmentInput.value, descriptionInput.value, datetimeInput.value);
-        alert('Event updated successfully');
-        editEventModal.classList.add('hidden');
-        getEvents(); // Refresh the events list to reflect the changes
-      } catch (error) {
-        alert(`Error updating event: ${error.message}`);
+      const eventIdWithoutPrefix = event.target.id.replace('editCesEventBtn_', '');
+
+      // Show the edit event modal
+      editEventModal.classList.remove('hidden');
+
+      // Populate the edit fields with the event details
+      const eventNameInput = document.getElementById('edit_eventName');
+      const departmentInput = document.getElementById('edit_department');
+      const descriptionInput = document.getElementById('edit_description');
+      const datetimeInput = document.getElementById('edit_datetime');
+
+      const eventRow = event.target.closest('tr');
+      const eventNameText = eventRow.children[1].textContent;
+      const eventDateText = eventRow.children[2].textContent;
+      const eventDescriptionText = eventRow.children[3].textContent;
+
+      // Convert eventDateText to a valid datetime-local format
+      const isoDateString = convertToDateTimeLocal(eventDateText);
+
+      if (!isoDateString) {
+        alert('Invalid event date format.');
+        return;
       }
-    }, { once: true }); // Ensure the event listener is added only once
+
+      // Extract department from event ID
+      const department = eventIdWithoutPrefix.split('_')[1];
+
+      eventNameInput.value = eventNameText;
+      departmentInput.value = department;
+      descriptionInput.value = eventDescriptionText;
+      datetimeInput.value = isoDateString;
+
+      const editDeleteEventBtn = document.getElementById('editDeleteEventBtn');
+
+      editDeleteEventBtn.addEventListener('click', () => {
+        event.preventDefault();
+        editEventModal.classList.toggle('hidden');
+      });
+      
+      // Attach event listener to the save button
+      editEventSaveButton.addEventListener('click', async (saveEvent) => {
+        saveEvent.preventDefault();
+        try {
+          await editCesEvent(eventIdWithoutPrefix, eventNameInput.value, departmentInput.value, descriptionInput.value, datetimeInput.value);
+          alert('Event updated successfully');
+          editEventModal.classList.add('hidden');
+          getEvents(); // Refresh the events list to reflect the changes
+        } catch (error) {
+          alert(`Error updating event: ${error.message}`);
+        }
+      }, { once: true }); // Ensure the event listener is added only once
+    });
   });
-});
 
 // Function to handle date conversion
-function convertToDateTimeLocal(dateString) {
-  const months = {
-    January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
-    July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
-  };
+  function convertToDateTimeLocal(dateString) {
+    const months = {
+      January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+      July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
+    };
 
-  const datePattern = /(\w+) (\d+), (\d+) at (\d+):(\d+) (\w+)/;
-  const match = dateString.match(datePattern);
+    const datePattern = /(\w+) (\d+), (\d+) at (\d+):(\d+) (\w+)/;
+    const match = dateString.match(datePattern);
 
-  if (!match) {
-    return '';
+    if (!match) {
+      return '';
+    }
+
+    const month = months[match[1]];
+    const day = parseInt(match[2]);
+    const year = parseInt(match[3]);
+    let hour = parseInt(match[4]);
+    const minute = parseInt(match[5]);
+    const period = match[6];
+
+    if (period === 'PM' && hour < 12) {
+      hour += 12;
+    } else if (period === 'AM' && hour === 12) {
+      hour = 0;
+    }
+
+    const eventDate = new Date(year, month, day, hour, minute);
+    return eventDate.toISOString().substring(0, 16); // Format to "YYYY-MM-DDTHH:MM"
   }
-
-  const month = months[match[1]];
-  const day = parseInt(match[2]);
-  const year = parseInt(match[3]);
-  let hour = parseInt(match[4]);
-  const minute = parseInt(match[5]);
-  const period = match[6];
-
-  if (period === 'PM' && hour < 12) {
-    hour += 12;
-  } else if (period === 'AM' && hour === 12) {
-    hour = 0;
-  }
-
-  const eventDate = new Date(year, month, day, hour, minute);
-  return eventDate.toISOString().substring(0, 16); // Format to "YYYY-MM-DDTHH:MM"
-}
 }
 
 function generateID(date, dept) {

@@ -95,21 +95,6 @@
       </div>
     </div>
   </div>
-  
-  <div id="viewEventModal" class="font-poppins hidden fixed z-10 pt-24 left-0 top-0 w-full h-full overflow-auto bg-black bg-opacity-40">
-    <div class="bg-white m-auto p-5 border border-gray-400 w-4/5">
-      <div class="flex flex-col">
-        <span class="close items-start justify-end w-max">
-          <span class="material-symbols-outlined">cancel</span>
-        </span>
-        <p>Viewing Event</p>
-        <p>ID:</p>
-        <p>Event Name</p>
-        <p>Date:</p>
-        <p>Description:</p>
-      </div>
-    </div>
-  </div>
 
   <div id="addEventModal" class="font-poppins hidden fixed z-10 pt-24 left-0 top-0 w-full h-full overflow-auto bg-black bg-opacity-40">
     <div class="bg-lightblue m-auto p-5 border border-gray-400 w-2/5 h-5/12 rounded-2xl">
@@ -139,6 +124,44 @@
           </div>
           <div class="flex w-100% flex items-start justify-end py-4">
             <button id="addEventSaveButton" class="bg-darkblue rounded-2xl w-40 h-14 text-white font-poppins text-xl ">Add Event</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="viewEventModal" class="font-poppins hidden fixed z-10 pt-24 left-0 top-0 w-full h-full overflow-auto bg-black bg-opacity-40">
+    <div class="bg-lightblue m-auto p-5 border border-gray-400 w-2/5 h-5/12 rounded-2xl">
+      <div class="flex flex-col">
+        <div class="flex flex-row justify-between items-center">
+          <p class="text-4xl font-semibold py-5">Viewing Event Details</p>
+        </div>
+        <form>
+          <div class="flex flex-row py-4">
+            <div class="flex flex-col w-3/5">
+              <label>Event Name</label>
+              <p id="view_eventName" type="text" class="rounded-md h-10 focus:outline-skyblue text-darkblue pl-2">
+            </div>
+            <div class="flex flex-col pl-4 w-2/5">
+              <label>Department</label>
+              <p id="view_department" type="text" class="rounded-md h-10 focus:outline-skyblue text-darkblue pl-2 w-4/5">
+            </div>
+          </div>
+          <div class="flex flex-col py-4 w-56">
+            <label>Date and Time</label>
+            <p id="view_datetime" type="datetime-local" class="rounded-md h-10 focus:outline-skyblue text-darkblue pl-2">
+          </div>
+          <div class="flex flex-col py-4">
+            <label>Description</label>
+            <p id="view_description" class="rounded-md focus:outline-skyblue text-darkblue pl-2 py-2 h-56 resize-none"></p>
+          </div>
+          <div class="flex w-100% flex items-start justify-end py-4 space-between">
+            <button 
+            id="viewDeleteEventBtn" 
+            class="bg-red-800 mr-4 x-2 py-1 rounded-xl w-36 h-14 flex flex-row justify-center items-center text-white hover:bg-red-300 hover:text-black text-xl">
+              <span class="material-symbols-outlined">close</span>
+              Close
+            </button>
           </div>
         </form>
       </div>
