@@ -183,6 +183,7 @@ async function getEvents() {
       const eventDateText = eventRow.children[2].textContent;
       const eventDescriptionText = eventRow.children[3].textContent;
 
+
       // Convert eventDateText to a valid datetime-local format
       const isoDateString = convertToDateTimeLocal(eventDateText);
 
@@ -209,14 +210,32 @@ async function getEvents() {
       // Attach event listener to the save button
       editEventSaveButton.addEventListener('click', async (saveEvent) => {
         saveEvent.preventDefault();
-        try {
-          await editCesEvent(eventIdWithoutPrefix, eventNameInput.value, departmentInput.value, descriptionInput.value, datetimeInput.value);
-          alert('Event updated successfully');
-          editEventModal.classList.add('hidden');
-          getEvents(); // Refresh the events list to reflect the changes
-        } catch (error) {
-          alert(`Error updating event: ${error.message}`);
-        }
+      // Trim input values
+      const eventName = eventNameInput.value.trim();
+      const department = departmentInput.value.trim();
+      const description = descriptionInput.value.trim();
+      const datetime = datetimeInput.value.trim();
+
+      // Validate fields
+      if (!eventName || !department || !description || !datetime) {
+        alert('All fields are required.');
+        return;
+      }
+
+      // Validate department field
+      if (department.length >= 10 || department.includes(' ')) {
+        alert('Department must be less than 10 characters and contain no spaces.');
+        return;
+      }
+
+      try {
+        await editCesEvent(eventIdWithoutPrefix, eventName, department, description, datetime);
+        alert('Event updated successfully');
+        editEventModal.classList.add('hidden');
+        getEvents(); // Refresh the events list to reflect the changes
+      } catch (error) {
+        alert(`Error updating event: ${error.message}`);
+      }
       }, { once: true }); // Ensure the event listener is added only once
     });
   });
@@ -331,11 +350,25 @@ addEventSaveButton.addEventListener('click', async () => {
   
   event.preventDefault(); // Prevent the default form submission behavior
   // Get the values from the input fields
-  const name = document.getElementById('eventName').value;
-  const department = document.getElementById('department').value;
-  const description = document.getElementById('description').value;
-  const event_date = document.getElementById('datetime').value;
+  // Get the values from the input fields
+  const name = document.getElementById('eventName').value.trim();
+  const department = document.getElementById('department').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const event_date = document.getElementById('datetime').value.trim();
 
+  // Validate fields
+  if (!name || !department || !description || !event_date) {
+    alert('All fields are required.');
+    return;
+  }
+
+  // Validate department field
+  if (department.length >= 10 || department.includes(' ')) {
+    alert('Department must be less than 10 characters and contain no spaces.');
+    return;
+  }
+
+  
   try {
     // Call the addCesEvent function with the gathered values
     await addCesEvent(name, department, description, event_date);
