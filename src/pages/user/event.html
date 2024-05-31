@@ -34,15 +34,14 @@
   <div class="flex flex-col h-fit bg-lightblue">
     <div class="flex justify-between items-center p-4">
       <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
-      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Home</a>
       <a class="px-4 font-poppins text-xl underline underline-offset-8 text-darkblue hover:animate-bounce">Events</a>
-      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Requests</a>
-      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue">Log Out</a>
+      <a id="requestsLink" class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Requests</a>
+      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue" href="../auth/loginReg.html" >Log Out</a>
     </div>
     
     <div class="flex flex-col justify-center items-center pt-6">
       <div class="pb-10">
-        <p class="font-poppins font-semibold text-6xl text-darkblue">Admin - Events</p>
+        <p class="font-poppins font-semibold text-6xl text-darkblue">Events</p>
       </div>
 
       <form name="eventsearch" class="flex flex-row space-x-4 w-9/12">
@@ -53,10 +52,6 @@
         <div class="flex flex-col w-2/4">
           <label class="font-poppins text-darkblue">Event Name</label>
           <input id="searchEventName" type="text" class="rounded-md h-10 outline-none focus:outline-skyblue text-darkblue pl-2">
-        </div>
-        <div class="flex flex-col w-40">
-          <label class="font-poppins text-darkblue">Event Date</label>
-          <input id="searchEventDate" type="date" class="rounded-md h-10 outline-none focus:outline-skyblue text-darkblue pl-2">
         </div>
         <div class="flex flex-col justify-end">
           <button id="searchEventButton" class="bg-darkblue rounded-2xl w-40 h-14 text-white font-poppins text-xl active:translate-x-1 active:translate-y-1">Search Event</button>
@@ -87,12 +82,6 @@
         </table>
       </div>
 
-      <div class="py-10 flex items-start justify-end w-10/12">
-        <button id="addEventButton" class="bg-gray-300 text-darkblue px-2 py-1 rounded-xl h-12 flex flex-row justify-center items-center hover:bg-gray-600 hover:text-white w-40">
-          <span class="material-symbols-outlined pr-2">add_circle</span>
-           Select
-        </button>
-      </div>
     </div>
   </div>
 
@@ -137,6 +126,6 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="../../scripts/events.js"></script>
+  <script src="../../scripts/eventsUser.js"></script>
 </body>
 </html>
