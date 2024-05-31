@@ -84,8 +84,6 @@ async function fetchStudentName(studentID) {
     }
 }
 
-
-
 // Function to fetch event name by event ID
 async function fetchEventName(eventID) {
     try {
@@ -106,8 +104,7 @@ async function fetchEventName(eventID) {
     }
 }
 
-
-
+// Function to populate the request table
 async function populateRequestTable() {
     const requests = await fetchPendingRequests();
     let tableBody = document.getElementById('requestTableBody');
@@ -133,17 +130,17 @@ async function populateRequestTable() {
 
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td style="w-fit  py-2 px-4 border-r">${request.eventID}</td>
-            <td style="w-fit  py-2 px-4 border-r">${eventName}</td>
-            <td style="w-fit  py-2 px-4 border-r">${new Date(request.validationDate).toLocaleDateString()}</td>
-            <td style="w-fit  py-2 px-4 border-r">${request.studentID}</td>
-            <td style="w-fit  py-2 px-4 border-r">${fullName}</td> <!-- Display formatted full name -->
+            <td class="w-fit py-2 px-4 border-r">${request.eventID}</td>
+            <td class="w-fit py-2 px-4 border-r">${eventName}</td>
+            <td class="w-fit py-2 px-4 border-r">${new Date(request.validationDate).toLocaleDateString()}</td>
+            <td class="w-fit py-2 px-4 border-r">${request.studentID}</td>
+            <td class="w-fit py-2 px-4 border-r">${fullName}</td> <!-- Display formatted full name -->
             
             <td class="py-2 px-4 flex justify-center space-x-2">
                 <button id="approveRequest${request.id}" class="viewCesEventBtn bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
                 <span class="material-symbols-outlined pr-2">Approve</span>
                 </button>
-                <button id="rejectRequest${request.id}" class="editCesEventBtn bg-red-300 text-black px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-blue-800 hover:text-white">
+                <button id="rejectRequest${request.id}" class="editCesEventBtn bg-red-300 text-black px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
                 <span class="material-symbols-outlined pr-2">Reject</span>
                 </button>
             </td>
@@ -156,4 +153,15 @@ async function populateRequestTable() {
 document.addEventListener('DOMContentLoaded', () => {
     // Populate the table initially
     populateRequestTable();
+
+    // Add event listeners for approve and reject buttons
+    document.addEventListener('click', async (event) => {
+        if (event.target.id.startsWith('approveRequest')) {
+            const requestId = event.target.id.replace('approveRequest', '');
+            await approveRequest(requestId);
+        } else if (event.target.id.startsWith('rejectRequest')) {
+            const requestId = event.target.id.replace('rejectRequest', '');
+            await rejectRequest(requestId);
+        }
+    });
 });
