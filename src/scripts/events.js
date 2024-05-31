@@ -16,6 +16,8 @@ const deleteEventModal = document.getElementById('deleteEventModal');
 
 const editEventModal = document.getElementById('editEventModal');
 
+const viewEventModal = document.getElementById('viewEventModal');
+
 async function deleteCesEvent(eventID) {
   const { error } = await connection
    .from("CES Event")
@@ -93,7 +95,7 @@ async function getEvents() {
       <td class="w-2/6 py-2 px-4 border-r">${formattedDate}</td>
       <td class="w-fit py-2 px-4 border-r">${event.description}</td>
       <td class="py-2 px-4 flex justify-center space-x-2">
-        <button id="viewCesEventBtn_${event.eventID}" class="bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
+        <button id="viewCesEventBtn_${event.eventID}" class="viewCesEventBtn bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
           <span class="material-symbols-outlined pr-2">visibility</span>
           View
         </button>
@@ -181,6 +183,7 @@ async function getEvents() {
       const eventDateText = eventRow.children[2].textContent;
       const eventDescriptionText = eventRow.children[3].textContent;
 
+
       // Convert eventDateText to a valid datetime-local format
       const isoDateString = convertToDateTimeLocal(eventDateText);
 
@@ -207,19 +210,72 @@ async function getEvents() {
       // Attach event listener to the save button
       editEventSaveButton.addEventListener('click', async (saveEvent) => {
         saveEvent.preventDefault();
-        try {
-          await editCesEvent(eventIdWithoutPrefix, eventNameInput.value, departmentInput.value, descriptionInput.value, datetimeInput.value);
-          alert('Event updated successfully');
-          editEventModal.classList.add('hidden');
-          getEvents(); // Refresh the events list to reflect the changes
-        } catch (error) {
-          alert(`Error updating event: ${error.message}`);
-        }
+      // Trim input values
+      const eventName = eventNameInput.value.trim();
+      const department = departmentInput.value.trim();
+      const description = descriptionInput.value.trim();
+      const datetime = datetimeInput.value.trim();
+
+      // Validate fields
+      if (!eventName || !department || !description || !datetime) {
+        alert('All fields are required.');
+        return;
+      }
+
+      // Validate department field
+      if (department.length >= 10 || department.includes(' ')) {
+        alert('Department must be less than 10 characters and contain no spaces.');
+        return;
+      }
+
+      try {
+        await editCesEvent(eventIdWithoutPrefix, eventName, department, description, datetime);
+        alert('Event updated successfully');
+        editEventModal.classList.add('hidden');
+        getEvents(); // Refresh the events list to reflect the changes
+      } catch (error) {
+        alert(`Error updating event: ${error.message}`);
+      }
       }, { once: true }); // Ensure the event listener is added only once
     });
   });
+  
+  // Attach event listeners to the view buttons
+  const viewButtons = document.querySelectorAll('.viewCesEventBtn');
+  viewButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault(); // Add this line to prevent default behavior
 
-// Function to handle date conversion
+      // Show the view event modal
+      viewEventModal.classList.remove('hidden');
+      
+      const eventIdWithoutPrefix = event.target.id.replace('viewCesEventBtn_', '');
+
+      // Populate the view fields with the event details
+      const eventRow = event.target.closest('tr');
+      const eventNameText = eventRow.children[1].textContent;
+      const eventDateText = eventRow.children[2].textContent;
+      const eventDescriptionText = eventRow.children[3].textContent;
+
+      // Extract department from event ID
+      const department = eventIdWithoutPrefix.split('_')[1];
+
+      document.getElementById('view_eventName').textContent = eventNameText;
+      document.getElementById('view_department').textContent = department;
+      document.getElementById('view_datetime').textContent = eventDateText;
+      document.getElementById('view_description').textContent = eventDescriptionText;
+
+      // Event listener for closing the view modal
+      const viewCloseBtn = document.getElementById('viewCloseBtn');
+      
+      viewCloseBtn.addEventListener('click', () => {
+        viewEventModal.classList.add('hidden');
+        console.log('cancel clicked');
+      });
+    });
+  });
+
+  // Function to handle date conversion
   function convertToDateTimeLocal(dateString) {
     const months = {
       January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
@@ -250,6 +306,7 @@ async function getEvents() {
     return eventDate.toISOString().substring(0, 16); // Format to "YYYY-MM-DDTHH:MM"
   }
 }
+
 
 function generateID(date, dept) {
   // Extract month, day, and year from the given date
@@ -293,11 +350,25 @@ addEventSaveButton.addEventListener('click', async () => {
   
   event.preventDefault(); // Prevent the default form submission behavior
   // Get the values from the input fields
-  const name = document.getElementById('eventName').value;
-  const department = document.getElementById('department').value;
-  const description = document.getElementById('description').value;
-  const event_date = document.getElementById('datetime').value;
+  // Get the values from the input fields
+  const name = document.getElementById('eventName').value.trim();
+  const department = document.getElementById('department').value.trim();
+  const description = document.getElementById('description').value.trim();
+  const event_date = document.getElementById('datetime').value.trim();
 
+  // Validate fields
+  if (!name || !department || !description || !event_date) {
+    alert('All fields are required.');
+    return;
+  }
+
+  // Validate department field
+  if (department.length >= 10 || department.includes(' ')) {
+    alert('Department must be less than 10 characters and contain no spaces.');
+    return;
+  }
+
+  
   try {
     // Call the addCesEvent function with the gathered values
     await addCesEvent(name, department, description, event_date);
