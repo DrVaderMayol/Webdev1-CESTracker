@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily:{
+          'poppins': ['Poppins', 'sans-serif']
+        },
+        extend: {
+          colors: {
+            darkblue: '#0C1D4B',
+            skyblue: '#6187BF',
+            lightblue: '#ABC9DD',
+            cyan: '#5A6473'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+
+
+  <div name="body"  class="flex flex-col height-200 bg-lightblue">
+    <!-- add "underline underline-offset-8" in navbar link if its the page being referenced to!-->
+    <div name="nav" class="flex justify-between items-center p-4">
+      <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce  text-darkblue">Home</a>
+      <a class="px-4 font-poppins text-xl underline text-darkblue hover:animate-bounce">Events</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">My Points</a>
+      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue">Log Out</a>
+    </div>
+    
+    <div class="w-full bg-lightblue shadow-lg flex pt-24 ">
+      <div>
+        <div class="font-poppins pl-24 pr-24 ">
+          <p class="text-cyan text-xl pb-5 pt-2">Welcome DCISM Students!</p>
+          <p class="text-darkblue text-5xl font-bold pb-3 ">Find out how many</p>
+          <p class="text-darkblue text-5xl font-bold pb-3">points you need</p>
+          <p class="text-darkblue text-5xl font-bold pb-5">to graduate!</p>
+          <p class="text-cyan text-xl pb-5">A student made website that helps other students track their CES Points to help with graduating</p>
+        </div>
+      </div>
+
+      <div>
+        <img src="../assets/image1.png" class=" top-0 right-0 object-scale-cover">
+        </div>
+
+    </div>
+
+    <div class="w-full bg-white shadow-lg p-10">
+      <p class="text-darkblue text-4xl font-bold pb-10 text-center">Recent Events</p>
+      
+      <div class="flex justify-evenly">
+        <div class="flex-column">
+          <img src="../assets/image2.png">
+          <div class="bg-lightblue w-auto h-32 pl-10">
+            <div class="font-poppins text-darkblue pt-5">
+              <p class="font-semibold">Step Into Luck: BINGO </p>
+              <p class="pt-2"> "Step into Luck Bingo: Where Every </p>
+              <p class="pt-2 pb-2"> Number Leads to Fortune!" </p>
+            </div>
+          </div> <!-- New div -->
+        </div>
+        <div class="flex-column">
+          <img src="../assets/image3.png">
+          <div class="bg-lightblue w-auto h-32 pl-10">
+            <div class="font-poppins text-darkblue pt-5">
+              <p class="font-semibold">3KM FUN RUN</p>
+              <p class="pt-2"> Run with us, where every stride </p>
+              <p class="pt-2"> supports a cause, </p>
+            </div>
+          </div> <!-- New div -->
+        </div>
+        <div class="flex-column">
+          <img src="../assets/image4.png">
+          <div class="bg-lightblue w-auto h-32 pl-10">
+            <div class="font-poppins text-darkblue pt-5">
+              <p class="font-semibold">BINGO NIGHT!</p>
+              <p class="pt-2">Bingo Night: Fun, laughter,</p>
+              <p class="pt-2">community!</p>
+            </div>
+          </div> <!-- New div -->
+        </div>
+      </div>
+    
+      <div class="flex justify-center mt-10 pl-9 pb-30">
+        <!-- LOG IN -->
+        <button id="searchEventButton" class="bg-darkblue rounded-2xl w-80 h-14 text-white font-poppins text-xl active:translate-x-1 active:translate-y-1">Log in to validate points</button>
+      </div>
+    </div>
+
+
+    <div class="bg-lightblue pb">
+
+    <div class="flex justify-center mt-10">
+      <p class="text-darkblue text-4xl font-bold pb-3 ">Contacts</p>
+    </div>
+
+    <div class="flex justify-evenly font-poppins">
+      <div>
+        <p class="text-darkblue text-l font-l pb-3 text-center">Khent Dela Paz</p>
+        <p class="text-darkblue font-semibold text-l font-l pb-3 text-center">kldelapaz@usc.edu.ph</p>
+        <p class="text-darkbluetext-l font-l pb-3 text-center">OJT & CES Coordinator</p>
+      </div>
+      <div>
+        <p class="text-darkblue text-l font-l pb-3 text-center">Chris Ray Belarmino</p>
+        <p class="text-darkblue font-semibold text-l font-l pb-3 text-center">cbelarmino@usc.edu.ph</p>
+        <p class="text-darkblue text-l font-l pb-3 text-center">OJT & CES Coordinator</p>
+      </div>
+      <div>
+        <p class="text-darkblue text-l font-l pb-3 text-center">Sheena Stella Salde</p>
+        <p class="text-darkblue font-semibold text-l font-l pb-3 text-center">19100115@usc.edu.ph</p>
+        <p class="text-darkblue text-l font-l pb-3 ">CISCO VP External</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+</html>
