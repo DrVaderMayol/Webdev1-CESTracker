@@ -130,29 +130,17 @@ async function populateRequestTable() {
 
         const row = document.createElement('tr');
         row.innerHTML = `
-<<<<<<< Updated upstream
             <td class="w-fit py-2 px-4 border-r">${request.eventID}</td>
             <td class="w-fit py-2 px-4 border-r">${eventName}</td>
             <td class="w-fit py-2 px-4 border-r">${new Date(request.validationDate).toLocaleDateString()}</td>
             <td class="w-fit py-2 px-4 border-r">${request.studentID}</td>
             <td class="w-fit py-2 px-4 border-r">${fullName}</td> <!-- Display formatted full name -->
-=======
-            <td style="w-fit  py-2 px-4 border-r">${request.eventID}</td>
-            <td style="w-fit  py-2 px-4 border-r pl-20">${eventName}</td>
-            <td style="w-fit  py-2 px-4 border-r">${new Date(request.validationDate).toLocaleDateString()}</td>
-            <td style="w-fit  py-2 px-4 border-r">${request.studentID}</td>
-            <td style="w-fit  py-2 px-4 border-r">${fullName}</td> <!-- Display formatted full name -->
->>>>>>> Stashed changes
             
             <td class="py-2 px-4 flex justify-center space-x-2">
                 <button id="approveRequest${request.id}" class="viewCesEventBtn bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white pl-3">
                 <span class="material-symbols-outlined pr-2">Approve</span>
                 </button>
-<<<<<<< Updated upstream
                 <button id="rejectRequest${request.id}" class="editCesEventBtn bg-red-300 text-black px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
-=======
-                <button id="rejectRequest${request.id}" class="editCesEventBtn bg-red-300 text-black px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-blue-800 hover:text-white  pl-3">
->>>>>>> Stashed changes
                 <span class="material-symbols-outlined pr-2">Reject</span>
                 </button>
             </td>
