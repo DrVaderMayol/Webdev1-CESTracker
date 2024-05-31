@@ -197,6 +197,15 @@ editButtons.forEach(button => {
     descriptionInput.value = eventDescriptionText;
     datetimeInput.value = isoDateString;
 
+    
+    const editDeleteEventBtn = document.getElementById('editDeleteEventBtn');
+
+    editDeleteEventBtn.addEventListener('click', () => {
+      event.preventDefault();
+      editEventModal.classList.toggle('hidden');
+      console.log('cancel clicked');
+    });
+    
     // Attach event listener to the save button
     editEventSaveButton.addEventListener('click', async (saveEvent) => {
       saveEvent.preventDefault();

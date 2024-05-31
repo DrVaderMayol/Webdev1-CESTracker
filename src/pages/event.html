@@ -150,7 +150,6 @@
       <div class="flex flex-col">
         <div class="flex flex-row justify-between items-center">
           <p class="text-4xl font-semibold py-5">Editing Event</p>
-          <span class="material-symbols-outlined close">cancel</span>
         </div>
         <form>
           <div class="flex flex-row py-4">
@@ -171,8 +170,16 @@
             <label>Description</label>
             <textarea id="edit_description" class="rounded-md focus:outline-skyblue text-darkblue pl-2 py-2 h-56 resize-none"></textarea>
           </div>
-          <div class="flex w-100% flex items-start justify-end py-4">
-            <button id="editEventSaveButton" class="bg-darkblue rounded-2xl w-40 h-14 text-white font-poppins text-xl ">Save Changes</button>
+          <div class="flex w-100% flex items-start justify-end py-4 space-between">
+            <button 
+            id="editDeleteEventBtn" 
+            class="bg-red-800 mr-4 x-2 py-1 rounded-xl w-36 h-14 flex flex-row justify-center items-center text-white hover:bg-red-300 hover:text-black text-xl">
+              <span class="material-symbols-outlined">close</span>
+              Cancel
+            </button>
+            <button 
+            id="editEventSaveButton" 
+            class="bg-green-800 rounded-2xl w-44 h-14 text-white font-poppins text-xl hover:bg-green-300 hover:text-black">Save Changes</button>
           </div>
         </form>
       </div>
