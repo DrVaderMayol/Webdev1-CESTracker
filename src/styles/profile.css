@@ -19,6 +19,7 @@ body {
     margin: 10px auto;
     border: 10px solid #ccc;
     border-radius: 50%;
+    text-align: center;
 }
 
 .student-profile .card h3 {
