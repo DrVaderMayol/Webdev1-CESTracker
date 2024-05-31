@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, 
+                         initial-scale=1.0">
+    <title>CES Points Tracker</title>
+    <link rel="stylesheet"
+          href="../../styles/login and sign up.css">
+</head>
+ 
+<body>
+
+    <header>
+        <h1 class="heading">CES Tracker Admin Login</h1>
+    </header>
+ 
+    <!-- container div -->
+    <div class="container">
+ 
+        <!-- Form section that contains the
+             login and the signup form -->
+        <div class="form-section">
+ 
+            <!-- login form -->
+            <div class="login-box">
+                <input type="email"
+                       class="email ele"
+                       id="loginEmail"
+                       placeholder="username">
+                <input type="password"
+                       class="password ele"
+                       id="loginPass"
+                       placeholder="password">
+
+                <button id="loginbtn" class="clkbtn">Login</button>
+
+            </div>
+        </div>
+    </div>
+    
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="../../scripts/adminLogin.js"></script>
+</body>
+</html>

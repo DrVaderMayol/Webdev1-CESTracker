@@ -35,42 +35,32 @@
             <div class="login-box">
                 <input type="email"
                        class="email ele"
+                       id="loginEmail"
                        placeholder="youremail@email.com">
                 <input type="password"
                        class="password ele"
+                       id="loginPass"
                        placeholder="password">
 
-                <button class="clkbtn">Login</button>
+                <button id="loginbtn" class="clkbtn">Login</button>
 
             </div>
  
             <!-- signup form -->
             <div class="signup-box">
-                <input type="text"
-                       class="name ele"
-                       placeholder="Enter your name">
-                <input type="email"
-                       class="email ele"
-                       placeholder="youremail@email.com">
-                <input type="password"
-                       class="password ele"
-                       placeholder="password">
-                <input type="Id number"
-                       class="password ele"
-                       placeholder="Id Number">
-                <input type="Program"
-                       class="password ele"
-                       placeholder="Program">
-                <input type="Year Level"
-                       class="password ele"
-                       placeholder="Year Level">
-                <button class="clkbtn">Signup</button>
-
+              <input type="text" class="name ele" id="registerFirstName" placeholder="Enter your first name">
+              <input type="text" class="name ele" id="registerMiddleName" placeholder="Enter your middle name">
+              <input type="text" class="name ele" id="registerLastName" placeholder="Enter your last name">
+              <input type="email" class="email ele" id="registerEmail" placeholder="youremail@email.com">
+              <input type="password" class="password ele" id="registerPass" placeholder="password">
+              <input type="text" class="id-number ele" id="registerStudentID" placeholder="Id Number">
+              <input type="text" class="program ele" id="registerCourse" placeholder="Program">
+              <button id="regbtn" class="clkbtn">Signup</button>
             </div>
         </div>
     </div>
-    <script src="../../scripts/login and sign up.js"></script>
-
     
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="../../scripts/loginAndReg.js"></script>
 </body>
 </html>
