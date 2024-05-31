@@ -32,7 +32,6 @@ async function loginf(email, password){
     console.error(error.message);
     return;
   }
-  console.log(data);
 }
 
 async function register(firstName, middleName, lastName, course, studentID, email, password){
@@ -80,40 +79,8 @@ loginbtn.addEventListener('click', async(event) => {
 
   try {
     await loginf(email, password);
-    alert('Logged in successfully');
-  } catch (error) {
-    alert(`Error logging in: ${error.message}`);
-  }
-});
-
-
-loginbtn.addEventListener('click', async(event) => {
-  event.preventDefault();
-
-   // Get the values of the email and password fields
-   const email = document.getElementById('loginEmail').value.trim();
-   const password = document.getElementById('loginPass').value.trim();
-
-  // Field validation
-  if (!email || !password) {
-    alert('Both email and password are required.');
-    return;
-  }
-
-  if (email === '' || password === '') {
-    alert('Email and password cannot be empty.');
-    return;
-  }
-
-  const emailPattern = /^[0-9]+@usc.edu.ph$/;
-  if (!emailPattern.test(email)) {
-    alert('Email must be in the format 19103939@usc.edu.ph with numbers before @ and ending with usc.edu.ph.');
-    return;
-  }
-
-  try {
-    await loginf(email, password);
-    alert('Logged in successfully');
+    window.location.href = "http://127.0.0.1:5500/src/pages/user/event.html";
+    
   } catch (error) {
     alert(`Error logging in: ${error.message}`);
   }
