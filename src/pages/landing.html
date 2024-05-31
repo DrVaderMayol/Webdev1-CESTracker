@@ -125,5 +125,15 @@
     </div>
   </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchEventButton = document.getElementById('searchEventButton');
+        if (searchEventButton) {
+            searchEventButton.addEventListener('click', () => {
+                window.location.href = 'http://127.0.0.1:5500/src/pages/auth/loginReg.html';
+            });
+        }
+    });
+</script>
 </body>
 </html>
