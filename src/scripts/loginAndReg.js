@@ -38,7 +38,7 @@ async function loginf(email, password){
 async function register(firstName, middleName, lastName, course, studentID, email, password){
 
   const { error } = await connection
-    .from("Student")
+    .from("CES Event")
     .insert({
       firstName: firstName,
       middleName: middleName,
@@ -87,26 +87,21 @@ loginbtn.addEventListener('click', async(event) => {
 });
 
 
-registerbtn.addEventListener('click', async (event) => {
+loginbtn.addEventListener('click', async(event) => {
   event.preventDefault();
 
-  // Get the values of the registration fields
-  const firstName = document.getElementById('registerFirstName').value.trim();
-  const middleName = document.getElementById('registerMiddleName').value.trim();
-  const lastName = document.getElementById('registerLastName').value.trim();
-  const course = document.getElementById('registerCourse').value.trim();
-  const studentID = document.getElementById('registerStudentID').value.trim();
-  const email = document.getElementById('registerEmail').value.trim();
-  const password = document.getElementById('registerPass').value.trim();
+   // Get the values of the email and password fields
+   const email = document.getElementById('loginEmail').value.trim();
+   const password = document.getElementById('loginPass').value.trim();
 
   // Field validation
-  if (!firstName || !lastName || !course || !studentID || !email || !password) {
-    alert('All fields are required.');
+  if (!email || !password) {
+    alert('Both email and password are required.');
     return;
   }
 
-  if (firstName === '' || lastName === '' || course === '' || studentID === '' || email === '' || password === '') {
-    alert('Fields cannot be empty.');
+  if (email === '' || password === '') {
+    alert('Email and password cannot be empty.');
     return;
   }
 
@@ -117,9 +112,9 @@ registerbtn.addEventListener('click', async (event) => {
   }
 
   try {
-    await register(firstName, middleName, lastName, course, studentID, email, password);
-    alert('Registered successfully');
+    await loginf(email, password);
+    alert('Logged in successfully');
   } catch (error) {
-    alert(`Error registering: ${error.message}`);
+    alert(`Error logging in: ${error.message}`);
   }
 });
