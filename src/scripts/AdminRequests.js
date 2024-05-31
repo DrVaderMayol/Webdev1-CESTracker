@@ -140,7 +140,7 @@ async function populateRequestTable() {
                 <button id="approveRequest${request.id}" class="viewCesEventBtn bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
                 <span class="material-symbols-outlined pr-2">Approve</span>
                 </button>
-                <button id="rejectRequest${request.id}" class="editCesEventBtn bg-red-300 text-black px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-blue-800 hover:text-white">
+                <button id="rejectRequest${request.id}" class="editCesEventBtn bg-red-300 text-black px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
                 <span class="material-symbols-outlined pr-2">Reject</span>
                 </button>
             </td>
