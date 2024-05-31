@@ -14,6 +14,8 @@ const addEventSaveButton = document.getElementById('addEventSaveButton');
 const deleteButtons = document.querySelectorAll('#deleteCesEventBtn');
 const deleteEventModal = document.getElementById('deleteEventModal');
 
+const editEventModal = document.getElementById('editEventModal');
+
 async function deleteCesEvent(eventID) {
   const { error } = await connection
    .from("CES Event")
@@ -25,9 +27,26 @@ async function deleteCesEvent(eventID) {
   } else {
     console.log(`Event with ID ${eventID} deleted successfully.`);
   }
-
   // Refresh the events list to reflect the deletion
   getEvents();
+}
+
+async function editCesEvent(eventID, name, department, description, event_date){
+  const newEventID = generateID(event_date, department);
+  
+  const { error } = await connection
+    .from("CES Event")
+    .update({
+      eventID: newEventID,
+      name: name,
+      description: description,
+      event_date: event_date,
+    })
+    .eq('eventID', eventID);
+
+  if (error) {
+    throw error;
+  }
 }
 
 async function addCesEvent(name, department, description, event_date) {
@@ -53,9 +72,10 @@ async function getEvents() {
     console.error(error.message);
     return;
   }
-  console.log(data)
+  console.log(data);
 
   const tableBody = document.querySelector('tbody');
+  tableBody.innerHTML = ''; // Clear existing rows
   data.forEach(event => {
     const row = document.createElement('tr');
     const eventDate = new Date(event.event_date);
@@ -73,28 +93,24 @@ async function getEvents() {
       <td class="w-2/6 py-2 px-4 border-r">${formattedDate}</td>
       <td class="w-fit py-2 px-4 border-r">${event.description}</td>
       <td class="py-2 px-4 flex justify-center space-x-2">
-
-        <button id="myBtn" class="bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
+        <button id="viewCesEventBtn_${event.eventID}" class="bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
           <span class="material-symbols-outlined pr-2">visibility</span>
           View
         </button>
-
-        <button class="bg-blue-500 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-blue-800 hover:text-white">
+        <button id="editCesEventBtn_${event.eventID}" class="editCesEventBtn bg-blue-500 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-blue-800 hover:text-white">
           <span class="material-symbols-outlined pr-2">edit</span>
           Edit
         </button>
-
         <button id="deleteCesEventBtn_${event.eventID}" class="deleteCesEventBtn bg-red-300 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
           <span class="material-symbols-outlined">delete</span>
           Delete
         </button>
-
       </td>
     `;
     tableBody.appendChild(row);
   });
 
-    // Attach event listeners to the delete buttons
+  // Attach event listeners to the delete buttons
   const deleteButtons = document.querySelectorAll('.deleteCesEventBtn');
   deleteButtons.forEach(button => {
     button.addEventListener('click', async (event) => {
@@ -142,6 +158,97 @@ async function getEvents() {
       });
     });
   });
+
+  // Attach event listeners to the edit buttons
+  const editButtons = document.querySelectorAll('.editCesEventBtn');
+  const editEventSaveButton = document.getElementById('editEventSaveButton');
+  editButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const eventIdWithoutPrefix = event.target.id.replace('editCesEventBtn_', '');
+
+      // Show the edit event modal
+      editEventModal.classList.remove('hidden');
+
+      // Populate the edit fields with the event details
+      const eventNameInput = document.getElementById('edit_eventName');
+      const departmentInput = document.getElementById('edit_department');
+      const descriptionInput = document.getElementById('edit_description');
+      const datetimeInput = document.getElementById('edit_datetime');
+
+      const eventRow = event.target.closest('tr');
+      const eventNameText = eventRow.children[1].textContent;
+      const eventDateText = eventRow.children[2].textContent;
+      const eventDescriptionText = eventRow.children[3].textContent;
+
+      // Convert eventDateText to a valid datetime-local format
+      const isoDateString = convertToDateTimeLocal(eventDateText);
+
+      if (!isoDateString) {
+        alert('Invalid event date format.');
+        return;
+      }
+
+      // Extract department from event ID
+      const department = eventIdWithoutPrefix.split('_')[1];
+
+      eventNameInput.value = eventNameText;
+      departmentInput.value = department;
+      descriptionInput.value = eventDescriptionText;
+      datetimeInput.value = isoDateString;
+
+      const editDeleteEventBtn = document.getElementById('editDeleteEventBtn');
+
+      editDeleteEventBtn.addEventListener('click', () => {
+        event.preventDefault();
+        editEventModal.classList.toggle('hidden');
+      });
+      
+      // Attach event listener to the save button
+      editEventSaveButton.addEventListener('click', async (saveEvent) => {
+        saveEvent.preventDefault();
+        try {
+          await editCesEvent(eventIdWithoutPrefix, eventNameInput.value, departmentInput.value, descriptionInput.value, datetimeInput.value);
+          alert('Event updated successfully');
+          editEventModal.classList.add('hidden');
+          getEvents(); // Refresh the events list to reflect the changes
+        } catch (error) {
+          alert(`Error updating event: ${error.message}`);
+        }
+      }, { once: true }); // Ensure the event listener is added only once
+    });
+  });
+
+// Function to handle date conversion
+  function convertToDateTimeLocal(dateString) {
+    const months = {
+      January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+      July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
+    };
+
+    const datePattern = /(\w+) (\d+), (\d+) at (\d+):(\d+) (\w+)/;
+    const match = dateString.match(datePattern);
+
+    if (!match) {
+      return '';
+    }
+
+    const month = months[match[1]];
+    const day = parseInt(match[2]);
+    const year = parseInt(match[3]);
+    let hour = parseInt(match[4]);
+    const minute = parseInt(match[5]);
+    const period = match[6];
+
+    if (period === 'PM' && hour < 12) {
+      hour += 12;
+    } else if (period === 'AM' && hour === 12) {
+      hour = 0;
+    }
+
+    const eventDate = new Date(year, month, day, hour, minute);
+    return eventDate.toISOString().substring(0, 16); // Format to "YYYY-MM-DDTHH:MM"
+  }
 }
 
 function generateID(date, dept) {
