@@ -45,70 +45,44 @@
       <div class="flex justify-between w-full max-w-4xl px-8">
         <div class="flex flex-col items-center">
           <div class="flex items-center justify-center w-40 h-40 bg-white text-darkblue text-8xl font-bold rounded-full">
-              5
+            <span id="totalNeeded">5</span>
           </div>
           <p class="mt-4 font-poppins font-normal text-xl text-darkblue">Total Needed</p>
         </div>
         <div class="flex flex-col items-center">
           <div class="flex items-center justify-center w-40 h-40 bg-white text-darkblue text-8xl font-bold rounded-full">
-              2
+            <span id="pointsEarned">0</span>
           </div>
           <p class="mt-4 font-poppins font-normal text-xl text-darkblue">Points Earned</p>
         </div>
         <div class="flex flex-col items-center">
           <div class="flex items-center justify-center w-40 h-40 bg-white text-darkblue text-8xl font-bold rounded-full">
-              3
+            <span id="pointsMissing">5</span>
           </div>
           <p class="mt-4 font-poppins font-normal text-xl text-darkblue">Points Missing</p>
         </div>
       </div>
+      
     </div>
 
     <div class="flex flex-col justify-center items-center pt-6">
       <div class="pt-10 font-poppins w-11/12">
         <table class="border-collapse table-auto w-full">
           <colgroup>
+            <col style="width: 15%;">
+            <col style="width: 20%;">
+            <col style="width: 10%;">
             <col style="width: 20%;">
             <col style="width: 15%;">
-            <col style="width: 10%;">
-            <col style="width: 30%;">
             <col style="width: 20%;">
           </colgroup>
           <thead>
             <tr class="bg-darkblue text-white">
               <th class="py-2 px-4 border-r">Event Id</th>
-              <th class="py-2 px-4 border-r">Name</th>
-              <th class="py-2 px-4 border-r">Date</th>
-              <th class="py-2 px-4 border-r">Description</th>
-              <th class="py-2 px-4">Points Earned</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Event rows will be dynamically inserted here -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="flex flex-col justify-center items-center pt-6">
-      <div class="pt-10 font-poppins w-11/12">
-        <div class="mt-20 pb-10 w-full text-center">
-          <p class="font-poppins font-semibold text-4xl text-darkblue">Requested Points</p>
-        </div>
-        <table class="border-collapse table-auto w-full">
-          <colgroup>
-            <col style="width: 20%;">
-            <col style="width: 15%;">
-            <col style="width: 10%;">
-            <col style="width: 30%;">
-            <col style="width: 20%;">
-          </colgroup>
-          <thead>
-            <tr class="bg-darkblue text-white">
-              <th class="py-2 px-4 border-r">Event Id</th>
-              <th class="py-2 px-4 border-r">Name</th>
-              <th class="py-2 px-4 border-r">Date</th>
-              <th class="py-2 px-4 border-r">Description</th>
+              <th class="py-2 px-4 border-r">Event Name</th>
+              <th class="py-2 px-4 border-r">Student ID</th>
+              <th class="py-2 px-4 border-r">Student Name</th>
+              <th class="py-2 px-4 border-r">Date of Request</th>
               <th class="py-2 px-4">Status</th>
             </tr>
           </thead>
@@ -121,5 +95,7 @@
 
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="../../scripts/points.js"></script>
 </body>
 </html>
