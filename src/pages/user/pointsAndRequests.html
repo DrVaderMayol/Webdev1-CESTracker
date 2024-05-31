@@ -29,14 +29,13 @@
 </head>
 <body>
   <div name="body"  class="flex flex-col h-screen bg-lightblue">
-    <!-- add "underline underline-offset-8" in navbar link if its the page being referenced to!-->
-    <div name="nav" class="flex justify-between items-center p-4">
-      <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
-      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Home</a>
-      <a class="px-4 font-poppins text-xl text-darkblue hover:animate-bounce">Events</a>
-      <a class="px-4 font-poppins text-xl underline underline-offset-8 hover:animate-bounce text-darkblue">My Points</a>
-      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue">Log Out</a>
-    </div>
+    <div class="flex flex-col h-fit bg-lightblue">
+      <div class="flex justify-between items-center p-4">
+        <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
+        <a class="px-4 font-poppins text-xl text-darkblue hover:animate-bounce" href="./event.html" >Events</a>
+        <a class="px-4 font-poppins text-xl hover:animate-bounce underline underline-offset-8  text-darkblue">Requests</a>
+        <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue" href="../auth/loginReg.html" >Log Out</a>
+      </div>
     
     <div name="content" class="flex flex-col justify-center items-center pt-6">
       <div class="pb-10">

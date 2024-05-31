@@ -3,9 +3,6 @@ const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const apiUrl = "https://zknaosqwpjxkkoiliwkh.supabase.co";
 const connection = supabase.createClient(apiUrl, apiKey);
 
-// Placeholder for the logged-in student's ID
-const loggedInStudentId = 23100839;  // Replace with actual logged-in student ID logic
-
 // Function to fetch the event name from Supabase
 async function fetchEventName(eventID) {
   const { data, error } = await connection
@@ -20,6 +17,21 @@ async function fetchEventName(eventID) {
   }
   return data.name;
 }
+
+function getQueryParams() {
+  const params = {};
+  const queryString = window.location.search.substring(1);
+  const paramPairs = queryString.split("&");
+  paramPairs.forEach(pair => {
+      const [key, value] = pair.split("=");
+      params[key] = decodeURIComponent(value);
+  });
+  return params;
+}
+
+// Retrieve studentID from URL parameters
+const queryParams = getQueryParams();
+const loggedInStudentId = queryParams.studentID;
 
 // Function to fetch student name from Supabase
 async function fetchStudentName(studentID) {
