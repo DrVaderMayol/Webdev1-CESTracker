@@ -18,6 +18,8 @@ const editEventModal = document.getElementById('editEventModal');
 
 const viewEventModal = document.getElementById('viewEventModal');
 
+const eventSearchBtn = document.getElementById('searchEventButton');
+
 async function deleteCesEvent(eventID) {
   const { error } = await connection
    .from("CES Event")
@@ -275,6 +277,72 @@ async function getEvents() {
     });
   });
 
+  eventSearchBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+  
+    const eventID = document.getElementById('searchEventID').value.trim().toLowerCase();
+    const eventName = document.getElementById('searchEventName').value.trim().toLowerCase();
+  
+    // Check if at least one field is filled
+    if (!eventID && !eventName){
+      alert('Please fill in at least one search field.');
+      return;
+    }
+  
+    // Filter events based on the search criteria
+    searchEvents({ eventID, name: eventName});
+  });
+
+  async function searchEvents(filter = {}) {
+    const { data, error } = await connection.from("CES Event").select();
+    if (error) {
+      console.error(error.message);
+      return;
+    }
+  
+    // Filter the data based on the search criteria
+    const filteredData = data.filter(event => {
+      if (filter.eventID && !event.eventID.toLowerCase().includes(filter.eventID)) return false;
+      if (filter.name && !event.name.toLowerCase().includes(filter.name)) return false;
+      return true;
+    });
+  
+    const tableBody = document.querySelector('tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+    filteredData.forEach(event => {
+      const row = document.createElement('tr');
+      const eventDate = new Date(event.event_date);
+      const formattedDate = eventDate.toLocaleString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      });
+      row.innerHTML = `
+        <td class="w-fit py-2 px-4 border-r">${event.eventID}</td>
+        <td class="w-fit py-2 px-4 border-r">${event.name}</td>
+        <td class="w-2/6 py-2 px-4 border-r">${formattedDate}</td>
+        <td class="w-fit py-2 px-4 border-r">${event.description}</td>
+        <td class="py-2 px-4 flex justify-center space-x-2">
+          <button id="viewCesEventBtn_${event.eventID}" class="viewCesEventBtn bg-green-300 x-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center text-darkblue hover:bg-green-800 hover:text-white">
+            <span class="material-symbols-outlined pr-2">visibility</span>
+            View
+          </button>
+          <button id="editCesEventBtn_${event.eventID}" class="editCesEventBtn bg-blue-500 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-blue-800 hover:text-white">
+            <span class="material-symbols-outlined pr-2">edit</span>
+            Edit
+          </button>
+          <button id="deleteCesEventBtn_${event.eventID}" class="deleteCesEventBtn bg-red-300 text-darkblue px-2 py-1 rounded-xl w-24 h-12 flex flex-row justify-center items-center hover:bg-red-800 hover:text-white">
+            <span class="material-symbols-outlined">delete</span>
+            Delete
+          </button>
+        </td>
+      `;
+      tableBody.appendChild(row);
+    });
+  }
   // Function to handle date conversion
   function convertToDateTimeLocal(dateString) {
     const months = {
@@ -307,7 +375,6 @@ async function getEvents() {
   }
 }
 
-
 function generateID(date, dept) {
   // Extract month, day, and year from the given date
   const eventDate = new Date(date);
@@ -331,7 +398,6 @@ function generateRandomString(length) {
 
   return randomString;
 }
-
 
 // Add an event listener to the addEventButton
 addEventButton.addEventListener('click', () => {
