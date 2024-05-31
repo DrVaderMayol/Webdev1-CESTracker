@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CES Tracker</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily:{
+          'poppins': ['Poppins', 'sans-serif']
+        },
+        extend: {
+          colors: {
+            darkblue: '#0C1D4B',
+            skyblue: '#6187BF',
+            lightblue: '#ABC9DD'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <div name="body"  class="flex flex-col h-screen bg-lightblue">
+    <!-- add "underline underline-offset-8" in navbar link if its the page being referenced to!-->
+    <div name="nav" class="flex justify-between items-center p-4">
+      <a class="pl-4 pr-12 text-4xl font-poppins font-semibold text-darkblue">CES Points Tracker</a>
+      <a class="px-4 font-poppins text-xl hover:animate-bounce text-darkblue">Home</a>
+      <a class="px-4 font-poppins text-xl text-darkblue hover:animate-bounce">Events</a>
+      <a class="px-4 font-poppins text-xl underline underline-offset-8 hover:animate-bounce text-darkblue">My Points</a>
+      <a class="ml-auto px-4 font-poppins text-xl font-semibold hover:animate-bounce text-darkblue">Log Out</a>
+    </div>
+    
+    <div name="content" class="flex flex-col justify-center items-center pt-6">
+      <div class="pb-10">
+        <p class="font-poppins font-semibold text-4xl text-darkblue">My Points</p>
+      </div>
+      <div class="flex justify-between w-full max-w-4xl px-8">
+        <div class="flex flex-col items-center">
+          <div class="flex items-center justify-center w-40 h-40 bg-white text-darkblue text-8xl font-bold rounded-full">
+              5
+          </div>
+          <p class="mt-4 font-poppins font-normal text-xl text-darkblue">Total Needed</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="flex items-center justify-center w-40 h-40 bg-white text-darkblue text-8xl font-bold rounded-full">
+              2
+          </div>
+          <p class="mt-4 font-poppins font-normal text-xl text-darkblue">Points Earned</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <div class="flex items-center justify-center w-40 h-40 bg-white text-darkblue text-8xl font-bold rounded-full">
+              3
+          </div>
+          <p class="mt-4 font-poppins font-normal text-xl text-darkblue">Points Missing</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center pt-6">
+      <div class="pt-10 font-poppins w-11/12">
+        <table class="border-collapse table-auto w-full">
+          <colgroup>
+            <col style="width: 20%;">
+            <col style="width: 15%;">
+            <col style="width: 10%;">
+            <col style="width: 30%;">
+            <col style="width: 20%;">
+          </colgroup>
+          <thead>
+            <tr class="bg-darkblue text-white">
+              <th class="py-2 px-4 border-r">Event Id</th>
+              <th class="py-2 px-4 border-r">Name</th>
+              <th class="py-2 px-4 border-r">Date</th>
+              <th class="py-2 px-4 border-r">Description</th>
+              <th class="py-2 px-4">Points Earned</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Event rows will be dynamically inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center pt-6">
+      <div class="pt-10 font-poppins w-11/12">
+        <div class="mt-20 pb-10 w-full text-center">
+          <p class="font-poppins font-semibold text-4xl text-darkblue">Requested Points</p>
+        </div>
+        <table class="border-collapse table-auto w-full">
+          <colgroup>
+            <col style="width: 20%;">
+            <col style="width: 15%;">
+            <col style="width: 10%;">
+            <col style="width: 30%;">
+            <col style="width: 20%;">
+          </colgroup>
+          <thead>
+            <tr class="bg-darkblue text-white">
+              <th class="py-2 px-4 border-r">Event Id</th>
+              <th class="py-2 px-4 border-r">Name</th>
+              <th class="py-2 px-4 border-r">Date</th>
+              <th class="py-2 px-4 border-r">Description</th>
+              <th class="py-2 px-4">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Event rows will be dynamically inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</body>
+</html>
